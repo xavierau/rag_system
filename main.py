@@ -2,17 +2,17 @@ import sys
 
 from generators.basic_openai_llm_generator import BasicOpenAILLMGenerator
 from rag_system import RAGSystem
+from retrievers.meilisearch_retriver import MeilisearchRetriever
 from retrievers.trivial_retriver import TrivialRetriever
 
 rag_system = RAGSystem(
-    retriever=TrivialRetriever(),
+    retriever=MeilisearchRetriever(host='http://127.0.0.1:7700',
+                                   password='aSampleMasterKey',
+                                   index_name="opensource-ai-tools-1"),
     generator=BasicOpenAILLMGenerator()
 )
 
-# Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    response = rag_system.query("When he first read the book 'True Stories from Nature'?")
+    response = rag_system.query("the best tool to chat with pdf document files")
     for generated_response in response:
         sys.stdout.write(generated_response.content)
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
