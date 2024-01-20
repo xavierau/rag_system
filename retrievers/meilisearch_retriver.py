@@ -16,10 +16,6 @@ class MeilisearchRetriever(RetrieverInterface):
 
         results = index.search(user_query)
 
-        if results.get("estimatedTotalHits") == 0:
-            return []
-
-        print(results)
         return [BaseDocument(content=d.get('desc', ""), meta={
             "title": d.get('title', ""),
             "features": d.get('features', ""),
