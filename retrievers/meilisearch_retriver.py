@@ -17,9 +17,6 @@ class MeilisearchRetriever(RetrieverInterface):
         results = index.search(user_query)
 
         return [BaseDocument(content=d.get('desc', ""), meta={
-            "title": d.get('title', ""),
-            "features": d.get('features', ""),
-            "category": d.get("cat", ""),
-            "url": d.get("url", ""),
-            "votes": d.get("vote", "")
-        }) for d in results.get("hits", [])]
+            key: d[key] for key in d.keys()
+                                   & {'title', 'features', 'cat', 'url', 'vote'}}) for d in
+                results.get("hits", [])]

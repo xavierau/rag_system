@@ -1,12 +1,17 @@
 import csv
+import os
 
 import meilisearch
 
+from dotenv import load_dotenv
+
+load_dotenv()
+
 file_path = "docs/tastic-ai-opensource-ai-tools.csv"
 
-index_name = "opensource-ai-tools-1"
+index_name = os.getenv('MEILISEARCH_INDEX')
 
-client = meilisearch.Client('http://127.0.0.1:7700', 'aSampleMasterKey')
+client = meilisearch.Client(os.getenv('MEILISEARCH_HOST'), os.getenv("MEILISEARCH_API_KEY"))
 
 index = client.index(index_name)
 

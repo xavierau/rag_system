@@ -1,3 +1,4 @@
+import os
 from typing import List
 from openai import OpenAI
 from pydantic import Field
@@ -22,7 +23,7 @@ class BasicOpenAILLMGenerator(GeneratorInterface):
         self.construct_messages(user_query, documents)
         print(self.messages)
         response = self.client.chat.completions.create(
-            model="gpt-3.5-turbo-1106",
+            model=os.getenv("OPENAI_LLM_MODEL", "gpt-3.5-turbo-1106"),
             messages=self.messages,
             stream=True
         )
